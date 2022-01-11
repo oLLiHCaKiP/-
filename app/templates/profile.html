@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Участник: {{ user.username }}</h1>
+    <hr>
+    <h2>Список ваших заявок:</h2> 
+    {% for application in applications %}
+    <div>
+            <p>
+                <h3>{{ application.competition.name }}</h3> 
+                {{ application.description }} <br>
+                Рейтинг заявки: {{application.rating}}
+            </p>
+            <hr>
+    </div>
+    {% endfor %}
+
+{% endblock %}

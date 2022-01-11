@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+        {% if current_user.is_anonymous %}
+        <h1>Здравствуй</h1>
+        {% else %}
+        <h1>Здравствуй, {{ current_user.name }} {{current_user.surname}}!</h1>
+        {% endif %}
+        <h2>Список соревнований:</h2>
+        {% for competition in competitions %}
+        <div>
+                <p>
+                        <h3> {{ competition.name }} </h3>
+                        {{ competition.description }} <br>
+                        Начало: {{competition.start_date}} Конец: {{competition.end_date}}
+                        <a href="{{ url_for('create_application', competition_id=competition.id) }}">Зарегистрироваться</a>
+                </p>
+                <hr>
+        </div>
+        {% endfor %}
+
+        <h2>Все заявки:</h2>
+        {% for application in applications %}
+        <div>
+                <p> 
+                        <h3>{{ application.author.username }}</h3> 
+                        Название соревнования: {{ application.competition.name }} <br>
+                        Описание заявки: {{ application.description }} <br>
+                        Оценка заявки: {{ application.rating}} 
+                </p>
+                {% if current_user.username == 'admin' %}
+                <a href="{{ url_for('edit_application', application_id=application.id) }}"> Изменить заявку </a>
+                {% endif %}
+                <hr>
+        </div>
+        {% endfor %}
+
+        
+{% endblock %}
